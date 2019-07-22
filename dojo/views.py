@@ -1,7 +1,8 @@
 import os
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
+from .models import Account, Post
 
 # Create your views here.
 
@@ -37,3 +38,54 @@ def excel_download(request):
         response = HttpResponse(f, content_type='application/vnd.ms-excel')
         response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
         return response
+
+def form_prac(request):
+    rqst = request.POST
+    context = {
+        'ctx' : rqst,
+    }
+    return render(request, "dojo/example.html", context)
+
+def account_list(request):
+    accounts = Account.objects.all()
+    return render(request, "dojo/account_list.html", {'accounts':accounts})
+
+def account_detail(request, pk):
+    account = get_object_or_404(Account, pk=pk)
+    posts = Post.objects.filter(author_name = account.name)
+    return render(request, "dojo/account_detail.html", {'account':account, 'posts':posts})
+
+
+def account_create(request):
+    if request.method == "POST":
+        account = Account()
+        account.name = request.POST['name']
+        account.age = request.POST['age']
+        account.save()
+
+        accounts = Account.objects.all()
+        return render(request, "dojo/account_list.html", {'accounts':accounts})    
+    else:
+        return render(request, "dojo/account_create.html")
+    
+def post_list(request):
+    posts = Post.objects.all()
+    return render(request, "dojo/post_list.html", {'posts':posts})
+
+def post_create(request):
+    if request.method == "POST":
+        post = Post()
+        post.author_name = request.POST['author_name']
+        post.title = request.POST['title']
+        post.text = request.POST['text']
+        post.save()
+
+        posts = Post.objects.all()
+        return render(request, "dojo/post_list.html", {'posts':posts})
+    else:
+        return render(request, "dojo/post_create.html")
+    
+def post_detail(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    account = get_object_or_404(Account, name=post.author_name)
+    return render(request, "dojo/post_detail.html", {'post':post, 'account':account})

@@ -1,6 +1,16 @@
-<h1>AskDjango</h1>
-<p>{{name}}</p>
-<p>나는 최범수다</P>
+{% extends "layout.html" %}
 
-<hr/>
-<p>post_list2</p>
+{% block title %}
+Post List
+{% endblock %}
+
+{% block content %}
+<h2>Post List</h2>
+<ul>
+{% for post in posts %}
+    <li><a href="{% url 'dojo:post_detail' post.id %}">{{ post.title }}</a> <small>by {{ post.author_name }}</small></li>
+{% endfor %}
+</ul>
+<div style="text-align: right; margin-right:100px;"><button><a href="{% url 'dojo:post_create' %}">Add Post</a></button></div>
+{% endblock %}
+

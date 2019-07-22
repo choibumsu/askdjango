@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Account Detail
+{% endblock %}
+
+{% block content %}
+<h2>이름 : {{ account.name }}</h2>
+<h3>나이 : {{ account.age }}세</h3>
+
+<ul>
+{% for post in posts %}
+    <li><a href="{% url 'dojo:post_detail' post.id %}">{{ post.title }}</a></li>
+{% endfor %}
+</ul>
+
+<div style="text-align: right; margin-right:100px;"><button><a href="{% url 'dojo:account_list' %}">Back To Account List</a></button></div>
+{% endblock %}
+

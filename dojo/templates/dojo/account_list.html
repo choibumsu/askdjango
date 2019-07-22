@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Account List
+{% endblock %}
+
+{% block content %}
+<h2>Account List</h2>
+<ul>
+{% for account in accounts %}
+    <li>'<a href="{% url 'dojo:account_detail' account.pk %}">{{ account.name }}</a>'님 <small>{{ account.age}}세</small></li>
+{% endfor %}
+</ul>
+<div style="text-align: right; margin-right:100px;"><button><a href="{% url 'dojo:account_create' %}">Create Account</a></button></div>
+{% endblock %}
+

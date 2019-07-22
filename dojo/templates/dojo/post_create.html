@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Account Create
+{% endblock %}
+
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <p><input type="text" name="author_name" placeholder="author_name"/></p>
+    <p><input type="text" name="title" placeholder="title"/></p>
+    <p><textarea name="text" id="" cols="30" rows="10" placeholder="text"></textarea></p>
+    <p><input type="submit"></p>
+</form>
+{% endblock %}
