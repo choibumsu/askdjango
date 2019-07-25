@@ -31,7 +31,7 @@ urlpatterns = [
     path('dojo/', include('dojo.urls', namespace='dojo')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('shop/', include('shop.urls', namespace='shop')),
-
+    path('prac/', include('prac.urls', namespace='prac')),
 ]
 
 if settings.DEBUG:
