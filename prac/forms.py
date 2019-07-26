@@ -4,7 +4,10 @@ from .models import Post
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'content']
+        fields = ['title', 'content', 'user_agent']
+        widgets = {
+            'user_agent' : forms.HiddenInput,
+        }
     
     '''
     title = forms.CharField(validators=[min_length_3_validator])
