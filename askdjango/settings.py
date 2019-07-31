@@ -132,3 +132,7 @@ STATIC_URL = '/static/'
 
 INTERNAL_IPS = ['127.0.0.1']
 
+from django.contrib.messages import constants
+
+MESSAGE_LEVEL = constants.DEBUG
+MESSAGE_TAGS = {constants.ERROR : 'danger'}
