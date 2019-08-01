@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.shortcuts import redirect
 from django.views.generic import RedirectView
+from django.conf.urls.static import static
 
 #def root(request):
 #    return redirect('blog:post_list')
@@ -33,6 +34,8 @@ urlpatterns = [
     path('shop/', include('shop.urls', namespace='shop')),
     path('prac/', include('prac.urls', namespace='prac')),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar
