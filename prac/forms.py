@@ -2,6 +2,10 @@ from django import forms
 from .models import Post
 
 class PostForm(forms.ModelForm):
+    category = forms.ChoiceField(choices=(
+        ('일', '1'),
+        ('이', '2'),
+    ))
     class Meta:
         model = Post
         fields = ['title', 'content', 'user_agent']

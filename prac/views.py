@@ -3,6 +3,7 @@ from .forms import PostForm
 from .models import Post
 
 # Create your views here.
+
 def post_new(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES) #인자 순서 바뀌면 안됨

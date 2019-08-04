@@ -1,4 +1,5 @@
-from django.views.generic import View, TemplateView
+from django.views.generic import View, TemplateView, ListView, DetailView
+from .models import Post
 from django.http import HttpResponse
 
 class PostListView1(View):
@@ -26,10 +27,17 @@ class PostListView2(TemplateView):
 
 post_list2 = PostListView2.as_view()
 
-class PostListView3(View):
-    pass
+class PostListView3(ListView):
+    template_name = 'dojo/cbv_post_list.html'
+    queryset = Post.objects.all()
 
 post_list3 = PostListView3.as_view()
+
+class PostListView4(DetailView):
+    template_name = 'dojo/cbv_post_detail.html'
+    queryset = Post.objects.all()
+
+post_list4 = PostListView4.as_view()
 
 class ExcelDownloadView(View):
     pass
