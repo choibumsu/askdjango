@@ -85,15 +85,23 @@ def post_create(request):
     else:
         return render(request, "dojo/post_create.html")
     
-def generate_view_fn(model):
-    def view_fn(request, pk):
-        instance = get_object_or_404(model, pk=pk)
-        instance_name = model._meta.model_name
-        template_name = f'{model._meta.app_label}/{instance_name}_detail.html'
-        return render(request, template_name, {
-            instance_name: instance,
+class DetailView(object):
+    def __init__(self, model):
+        self.model = model
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(self.model, id=kwargs['id'])
+    def get_template_name(self):
+        return f'{self.model._meta.app_label}/{self.model._meta.model_name}_detail.html'
+    def dispatch(self, request, *args, **kwargs):
+        return render(request, self.get_template_name(), {
+            self.model._meta.model_name: self.get_object(*args, **kwargs),
         })
-    return view_fn
+    @classmethod
+    def as_view(cls, model):
+        def view(request, *args, **kwargs):
+            self = cls(model)
+            return self.dispatch(request, *args, **kwargs)
+        return view
+    
 
-
-post_detail = generate_view_fn(Post)
+post_detail = DetailView.as_view(Post)
