@@ -6,8 +6,7 @@ Post Detail
 
 {% block content %}
 <h2>{{ post.title }}</h2>
-<p>by <a href="">{{ account.name }}</a></p>
-<!-- {% url 'dojo:account_detail' account.id %} -->
+<p>by <a href="{# {% url 'dojo:account_detail' account.id %} #}">{{ account.name }}</a></p>
 <p>{{ post.text }}</p>
 
 <div style="text-align: right; margin-right:100px;"><button><a href="{% url 'dojo:post_list' %}">Back To Post List</a></button></div>

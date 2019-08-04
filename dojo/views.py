@@ -88,10 +88,13 @@ def post_create(request):
 class DetailView(object):
     def __init__(self, model):
         self.model = model
+
     def get_object(self, *args, **kwargs):
-        return get_object_or_404(self.model, id=kwargs['id'])
+        return get_object_or_404(self.model, pk=kwargs['pk'])
+
     def get_template_name(self):
         return f'{self.model._meta.app_label}/{self.model._meta.model_name}_detail.html'
+        
     def dispatch(self, request, *args, **kwargs):
         return render(request, self.get_template_name(), {
             self.model._meta.model_name: self.get_object(*args, **kwargs),
