@@ -85,7 +85,15 @@ def post_create(request):
     else:
         return render(request, "dojo/post_create.html")
     
-def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    account = get_object_or_404(Account, name=post.author_name)
-    return render(request, "dojo/post_detail.html", {'post':post, 'account':account})
+def generate_view_fn(model):
+    def view_fn(request, pk):
+        instance = get_object_or_404(model, pk=pk)
+        instance_name = model._meta.model_name
+        template_name = f'{model._meta.app_label}/{instance_name}_detail.html'
+        return render(request, template_name, {
+            instance_name: instance,
+        })
+    return view_fn
+
+
+post_detail = generate_view_fn(Post)
